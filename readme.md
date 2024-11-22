@@ -164,3 +164,95 @@
   "unite": "Litre"
 }
 ```
+
+# Documentation API - PriceController
+
+## Endpoints pour gérer les prix
+
+### 1. Créer un nouveau prix
+- **URL**: `/api/prices`
+- **Méthode**: `POST`
+- **Résumé**: Crée un nouveau prix pour un produit dans un magasin.
+- **Description**: Ajoute un nouveau prix associé à un produit, un magasin et éventuellement une promotion.
+- **Réponses**:
+  - **201**: Prix créé avec succès.
+  - **400**: Les données fournies sont invalides ou incomplètes.
+
+---
+
+### 2. Récupérer tous les prix
+- **URL**: `/api/prices`
+- **Méthode**: `GET`
+- **Résumé**: Récupère tous les prix dans le système.
+- **Description**: Obtient une liste de tous les prix disponibles dans le système.
+- **Réponses**:
+  - **200**: Liste des prix récupérée avec succès.
+  - **404**: Aucun prix trouvé.
+
+---
+
+### 3. Récupérer un prix par ID
+- **URL**: `/api/prices/{id}`
+- **Méthode**: `GET`
+- **Résumé**: Récupère un prix à partir de son ID unique.
+- **Description**: Obtenez les détails du prix en fonction de son identifiant unique.
+- **Réponses**:
+  - **200**: Prix récupéré avec succès.
+  - **404**: Prix non trouvé pour l'ID fourni.
+
+---
+
+### 4. Mettre à jour un prix existant
+- **URL**: `/api/prices/{id}`
+- **Méthode**: `PUT`
+- **Résumé**: Met à jour les détails d'un prix existant.
+- **Description**: Met à jour un prix avec de nouvelles informations, telles que le montant ou la période de validité.
+- **Réponses**:
+  - **200**: Prix mis à jour avec succès.
+  - **404**: Prix non trouvé pour l'ID fourni.
+  - **400**: Les données fournies sont invalides ou incomplètes.
+
+---
+
+### 5. Supprimer un prix
+- **URL**: `/api/prices/{id}`
+- **Méthode**: `DELETE`
+- **Résumé**: Supprime un prix par son ID unique.
+- **Description**: Supprime un prix en fonction de son identifiant unique.
+- **Réponses**:
+  - **204**: Prix supprimé avec succès.
+  - **404**: Prix non trouvé pour l'ID fourni.
+
+---
+
+## Exemple de réponses
+
+### Créer un prix (201)
+```json
+//Price
+{
+  "priceID": 0,
+  "article": {
+    "articleId":5 ,
+    "articleName": "Livres",
+    "unit": {
+      "unitId": 1,
+      "unitName": "Kg"
+    },
+    "articleDefaultPrice": 3.96,
+    "lastUpdated": "2024-11-22T13:45:59.657Z"
+  },
+  "store": {
+    "storeId": 2,
+    "storeName": "string",
+    "storeCity": "string",
+    "storeAddress": "string"
+  },
+  "startDate": "2024-11-22T13:45:59.657Z",
+  "endDate": "2024-11-22T13:45:59.657Z",
+  "price": 0,
+  "previousPrice": 0,
+  "isPromotion": true,
+  "isEstimatedPrice": true
+}
+```

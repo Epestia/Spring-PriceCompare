@@ -10,7 +10,7 @@ public class PriceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "price_id")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "PriceID")
     private Long priceID;
 
     @ManyToOne
@@ -18,27 +18,27 @@ public class PriceEntity {
     private ArticleEntity article;
 
     @ManyToOne
-    @JoinColumn(name = "StoreID", referencedColumnName = "StoreID")
+    @JoinColumn(name = "StoreID", nullable = false)
     private StoreEntity store;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "start_date")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "StartDate")
     private Date startDate;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "end_date")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "EndDate")
     private Date endDate;
 
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "previous_price")
+    @Column(name = "PreviousPrice")
     private BigDecimal previousPrice;
 
-    @Column(name = "is_promotion")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "IsPromotion")
     private Boolean isPromotion;
 
-    @Column(name = "is_estimated_price")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "IsEstimatedPrice")
     private Boolean isEstimatedPrice;
 
     // Getters and Setters

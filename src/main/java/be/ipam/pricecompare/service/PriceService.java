@@ -1,56 +1,59 @@
 package be.ipam.pricecompare.service;
 
-
 import be.ipam.pricecompare.dto.PriceEntityDto;
-import be.ipam.pricecompare.mapper.PriceEntityMapper;
 import be.ipam.pricecompare.model.PriceEntity;
+import be.ipam.pricecompare.mapper.PriceEntityMapper;
 import be.ipam.pricecompare.repository.PriceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PriceService {
 
-    private final PriceRepository priceRepository;
-    private final PriceEntityMapper priceMapper;
+    private final PriceRepository priceRepository;  // Correction ici
+    private final PriceEntityMapper priceEntityMapper;
 
-    @Autowired
-    public PriceService(PriceRepository priceRepository, PriceEntityMapper priceMapper) {
-        this.priceRepository = priceRepository;
-        this.priceMapper = priceMapper;
-    }
-
-    public List<PriceEntityDto> getAllPrices() {
-        List<PriceEntity> prices = priceRepository.findAll();
-        return priceMapper.toDtoList(prices);
-    }
-
-    public Optional<PriceEntityDto> getPriceById(Long priceID) {
-        Optional<PriceEntity> priceEntity = priceRepository.findById(priceID);
-        return priceEntity.map(priceMapper::toDto);
+    // Constructeur avec injection des dépendances
+    public PriceService(PriceRepository priceRepository, PriceEntityMapper priceEntityMapper) {
+        this.priceRepository = priceRepository;  // Utilisation du bon nom ici
+        this.priceEntityMapper = priceEntityMapper;
     }
 
     public PriceEntityDto createPrice(PriceEntityDto priceEntityDto) {
-        PriceEntity priceEntity = priceMapper.toEntity(priceEntityDto);
-        priceEntity = priceRepository.save(priceEntity);
-        return priceMapper.toDto(priceEntity);
+        PriceEntity priceEntity = priceEntityMapper.toEntity(priceEntityDto);
+        PriceEntity savedPrice = priceRepository.save(priceEntity);  // Correction ici
+        return priceEntityMapper.toDto(savedPrice);
     }
 
-    public PriceEntityDto updatePrice(Long priceID, PriceEntityDto priceEntityDto) {
-        Optional<PriceEntity> existingPriceEntity = priceRepository.findById(priceID);
-        if (existingPriceEntity.isPresent()) {
-            PriceEntity priceEntity = priceMapper.toEntity(priceEntityDto);
-            priceEntity.setPriceID(priceID);  // Set the existing ID
-            priceEntity = priceRepository.save(priceEntity);
-            return priceMapper.toDto(priceEntity);
+    public List<PriceEntityDto> getAllPrices() {
+        return priceRepository.findAll()  // Correction ici
+                .stream()
+                .map(priceEntityMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<PriceEntityDto> getPriceById(Long id) {
+        return priceRepository.findById(id)  // Correction ici
+                .map(priceEntityMapper::toDto);
+    }
+
+    public Optional<PriceEntityDto> updatePrice(Long id, PriceEntityDto priceEntityDto) {
+        return priceRepository.findById(id)  // Correction ici
+                .map(existingPrice -> {
+                    PriceEntity updatedEntity = priceEntityMapper.toEntity(priceEntityDto);
+                    updatedEntity.setPriceID(existingPrice.getPriceID());  // Maintenir l'ID
+                    return priceEntityMapper.toDto(priceRepository.save(updatedEntity));  // Correction ici
+                });
+    }
+
+    public boolean deletePrice(Long id) {
+        if (priceRepository.existsById(id)) {  // Correction ici
+            priceRepository.deleteById(id);  // Correction ici
+            return true;
         }
-        return null;
-    }
-
-    public void deletePrice(Long priceID) {
-        priceRepository.deleteById(priceID);
+        return false;
     }
 }

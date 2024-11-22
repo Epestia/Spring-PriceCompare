@@ -13,6 +13,7 @@ import java.util.Date;
 public class PriceEntityDto implements Serializable {
     Long priceID;
     ArticleEntityDto article;
+    StoreEntityDto store;
     Date startDate;
     Date endDate;
     BigDecimal price;
