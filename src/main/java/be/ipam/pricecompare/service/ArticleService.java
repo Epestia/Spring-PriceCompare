@@ -1,14 +1,11 @@
 package be.ipam.pricecompare.service;
 
 import be.ipam.pricecompare.dto.ArticleEntityDto;
-import be.ipam.pricecompare.mapper.ArticleEntityMapper;
 import be.ipam.pricecompare.model.ArticleEntity;
+import be.ipam.pricecompare.mapper.ArticleEntityMapper;
 import be.ipam.pricecompare.repository.ArticleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,57 +14,40 @@ import java.util.stream.Collectors;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final ArticleEntityMapper articleEntityMapper;
+    private final ArticleEntityMapper articleEntityMapper;  // Injecter le mapper
 
-    @Autowired
+    // Constructeur avec injection de dépendance
     public ArticleService(ArticleRepository articleRepository, ArticleEntityMapper articleEntityMapper) {
         this.articleRepository = articleRepository;
         this.articleEntityMapper = articleEntityMapper;
     }
 
-    // Récupérer tous les articles
     public List<ArticleEntityDto> getAllArticles() {
-        List<ArticleEntity> articles = articleRepository.findAll();
-        return articles.stream()
-                .map(articleEntityMapper::toDto)
+        return articleRepository.findAll()
+                .stream()
+                .map(articleEntityMapper::toDto) // Utilisation de l'instance injectée
                 .collect(Collectors.toList());
     }
 
-    // Récupérer un article par son ID
     public Optional<ArticleEntityDto> getArticleById(Long id) {
         return articleRepository.findById(id)
-                .map(articleEntityMapper::toDto);
+                .map(articleEntityMapper::toDto); // Utilisation de l'instance injectée
     }
 
-    // Créer un nouvel article
-    public ArticleEntityDto createArticle(ArticleEntityDto articleEntityDto) {
-        ArticleEntity articleEntity = articleEntityMapper.toEntity(articleEntityDto);
+    public ArticleEntityDto createArticle(ArticleEntityDto articleDto) {
+        ArticleEntity articleEntity = articleEntityMapper.toEntity(articleDto); // Utilisation de l'instance injectée
         ArticleEntity savedArticle = articleRepository.save(articleEntity);
-        return articleEntityMapper.toDto(savedArticle);
+        return articleEntityMapper.toDto(savedArticle); // Utilisation de l'instance injectée
     }
 
-    // Mettre à jour un article
-
-
-    public Optional<ArticleEntityDto> updateArticle(Long id, ArticleEntityDto articleEntityDto) {
-        return articleRepository.findById(id)
-                .map(existingArticle -> {
-                    existingArticle.setArticleName(articleEntityDto.getArticleName());
-                    existingArticle.setArticleUnit(articleEntityDto.getArticleUnit());
-                    existingArticle.setArticleDefaultPrice(articleEntityDto.getArticleDefaultPrice());
-
-                    // Conversion de LocalDateTime en Date
-                    if (articleEntityDto.getLastUpdated() != null) {
-                        existingArticle.setLastUpdated(Date.from(articleEntityDto.getLastUpdated().atZone(ZoneId.systemDefault()).toInstant()));
-                    }
-
-                    ArticleEntity updatedArticle = articleRepository.save(existingArticle);
-                    return articleEntityMapper.toDto(updatedArticle);
-                });
+    public Optional<ArticleEntityDto> updateArticle(Long id, ArticleEntityDto articleDto) {
+        return articleRepository.findById(id).map(existingArticle -> {
+            ArticleEntity updatedEntity = articleEntityMapper.toEntity(articleDto); // Utilisation de l'instance injectée
+            updatedEntity.setArticleId(existingArticle.getArticleId()); // Maintenir l'ID
+            return articleEntityMapper.toDto(articleRepository.save(updatedEntity)); // Utilisation de l'instance injectée
+        });
     }
 
-
-    // Supprimer un article
     public boolean deleteArticle(Long id) {
         if (articleRepository.existsById(id)) {
             articleRepository.deleteById(id);
@@ -76,21 +56,18 @@ public class ArticleService {
         return false;
     }
 
-    // Trouver un article par son nom
-    public Optional<ArticleEntityDto> getArticleByName(String articleName) {
-        return articleRepository.findByArticleName(articleName)
-                .map(articleEntityMapper::toDto);
+    public Optional<ArticleEntityDto> getArticleByName(String name) {
+        return articleRepository.findByArticleName(name)
+                .map(articleEntityMapper::toDto); // Utilisation de l'instance injectée
     }
 
-    // Trouver un article par son prix
     public Optional<ArticleEntityDto> getArticleByPrice(Double price) {
         return articleRepository.findByArticleDefaultPrice(price)
-                .map(articleEntityMapper::toDto);
+                .map(articleEntityMapper::toDto); // Utilisation de l'instance injectée
     }
 
-    // Trouver un article par son nom et son unité
-    public Optional<ArticleEntityDto> getArticleByNameAndUnit(String articleName, String unit) {
-        return articleRepository.findByArticleNameAndArticleUnit(articleName, unit)
-                .map(articleEntityMapper::toDto);
+    public Optional<ArticleEntityDto> getArticleByNameAndUnit(String name, String unit) {
+        return articleRepository.findByArticleNameAndUnit_UnitName(name, unit)
+                .map(articleEntityMapper::toDto); // Utilisation de l'instance injectée
     }
 }

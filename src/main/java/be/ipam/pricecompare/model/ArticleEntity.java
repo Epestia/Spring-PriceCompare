@@ -1,32 +1,38 @@
 package be.ipam.pricecompare.model;
 
-
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "ArticleEntity")
 public class ArticleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long articleID;
+    @Column(name = "ArticleID")
+    private Long articleId;
 
+    @Column(name = "ArticleName", nullable = false, length = 255)
     private String articleName;
-    private String articleUnit;
+
+    @ManyToOne
+    @JoinColumn(name = "UnitID", nullable = false)
+    private UnitEntity unit;
+
+    @Column(name = "ArticleDefaultPrice", nullable = false, precision = 10, scale = 2)
     private BigDecimal articleDefaultPrice;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdated;
+    @Column(name = "LastUpdated", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime lastUpdated;
 
-    // Getters and Setters
-    public Long getArticleID() {
-        return articleID;
+    // Getters et Setters
+    public Long getArticleId() {
+        return articleId;
     }
 
-    public void setArticleID(Long articleID) {
-        this.articleID = articleID;
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
     }
 
     public String getArticleName() {
@@ -37,12 +43,12 @@ public class ArticleEntity {
         this.articleName = articleName;
     }
 
-    public String getArticleUnit() {
-        return articleUnit;
+    public UnitEntity getUnit() {
+        return unit;
     }
 
-    public void setArticleUnit(String articleUnit) {
-        this.articleUnit = articleUnit;
+    public void setUnit(UnitEntity unit) {
+        this.unit = unit;
     }
 
     public BigDecimal getArticleDefaultPrice() {
@@ -53,11 +59,11 @@ public class ArticleEntity {
         this.articleDefaultPrice = articleDefaultPrice;
     }
 
-    public Date getLastUpdated() {
+    public LocalDateTime getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

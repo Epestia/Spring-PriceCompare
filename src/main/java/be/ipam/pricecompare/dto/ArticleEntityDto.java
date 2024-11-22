@@ -1,9 +1,9 @@
 package be.ipam.pricecompare.dto;
 
+import be.ipam.pricecompare.model.UnitEntity;
 import lombok.Value;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class ArticleEntityDto implements Serializable {
     Long articleId;
     String articleName;
-    String articleUnit;
-    BigDecimal articleDefaultPrice;
+    UnitEntity unit;
+    Double articleDefaultPrice;
     LocalDateTime lastUpdated;
 }
