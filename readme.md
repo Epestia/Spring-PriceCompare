@@ -256,3 +256,74 @@
   "isEstimatedPrice": true
 }
 ```
+# Documentation API - StoreController
+
+## Endpoints pour gérer les magasins
+
+### 1. Récupérer tous les magasins
+- **URL**: `/api/stores`
+- **Méthode**: `GET`
+- **Résumé**: Récupère tous les magasins dans le système.
+- **Description**: Obtient une liste de tous les magasins disponibles dans le système.
+- **Réponses**:
+  - **200**: Liste des magasins récupérée avec succès.
+  - **404**: Aucun magasin trouvé.
+
+---
+
+### 2. Récupérer un magasin par son ID
+- **URL**: `/api/stores/{id}`
+- **Méthode**: `GET`
+- **Résumé**: Récupère un magasin à partir de son ID unique.
+- **Description**: Obtenez les détails du magasin en fonction de son identifiant unique.
+- **Réponses**:
+  - **200**: Magasin récupéré avec succès.
+  - **404**: Magasin non trouvé pour l'ID fourni.
+
+---
+
+### 3. Créer un nouveau magasin
+- **URL**: `/api/stores`
+- **Méthode**: `POST`
+- **Résumé**: Crée un nouveau magasin dans le système.
+- **Description**: Ajoute un nouveau magasin avec les informations spécifiées.
+- **Réponses**:
+  - **201**: Magasin créé avec succès.
+  - **400**: Les données fournies sont invalides ou incomplètes.
+
+---
+
+### 4. Mettre à jour un magasin existant
+- **URL**: `/api/stores/{id}`
+- **Méthode**: `PUT`
+- **Résumé**: Met à jour les détails d'un magasin existant.
+- **Description**: Met à jour un magasin avec de nouvelles informations, telles que l'adresse ou le nom.
+- **Réponses**:
+  - **200**: Magasin mis à jour avec succès.
+  - **404**: Magasin non trouvé pour l'ID fourni.
+  - **400**: Les données fournies sont invalides ou incomplètes.
+
+---
+
+### 5. Supprimer un magasin
+- **URL**: `/api/stores/{id}`
+- **Méthode**: `DELETE`
+- **Résumé**: Supprime un magasin par son ID unique.
+- **Description**: Supprime un magasin en fonction de son identifiant unique.
+- **Réponses**:
+  - **204**: Magasin supprimé avec succès.
+  - **404**: Magasin non trouvé pour l'ID fourni.
+
+---
+
+## Exemple de réponses
+
+### Créer un magasin (201)
+```json
+{
+  "storeId": 1,
+  "storeName": "Supermarché ABC",
+  "storeCity": "Bruxelles",
+  "storeAddress": "Rue du Commerce 12"
+}
+```
