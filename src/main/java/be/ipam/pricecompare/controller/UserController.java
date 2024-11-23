@@ -115,6 +115,3 @@ public class UserController {
                 : ResponseEntity.notFound().build();
     }
 }
-
-
-//BCrypt dans gradle

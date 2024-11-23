@@ -49,7 +49,7 @@
 
 ## Exemple de réponses
 
-### Créer un utilisateur (201)
+### Créer un utilisateur (201) 
 ```json
 {
   "id": 1,
@@ -229,7 +229,6 @@
 
 ### Créer un prix (201)
 ```json
-//Price
 {
   "priceID": 0,
   "article": {
@@ -327,3 +326,66 @@
   "storeAddress": "Rue du Commerce 12"
 }
 ```
+
+# Documentation API - PriceReportController
+
+## Endpoints pour gérer les rapports de prix
+
+### 1. Récupérer tous les rapports de prix
+- **URL**: `/api/price-reports`
+- **Méthode**: `GET`
+- **Résumé**: Récupère tous les rapports de prix générés.
+- **Description**: Obtient une liste de tous les rapports de prix générés dans le système.
+- **Réponses**:
+  - **200**: Liste des rapports de prix récupérée avec succès.
+  - **404**: Aucun rapport de prix trouvé.
+
+---
+
+### 2. Récupérer un rapport de prix par son ID
+- **URL**: `/api/price-reports/{id}`
+- **Méthode**: `GET`
+- **Résumé**: Récupère un rapport de prix à partir de son ID unique.
+- **Description**: Obtient les détails d'un rapport de prix en fonction de son identifiant unique.
+- **Réponses**:
+  - **200**: Rapport de prix récupéré avec succès.
+  - **404**: Rapport de prix non trouvé pour l'ID fourni.
+
+---
+
+### 3. Créer un rapport de prix
+- **URL**: `/api/price-reports`
+- **Méthode**: `POST`
+- **Résumé**: Crée un nouveau rapport de prix.
+- **Description**: Génère un rapport de prix en fonction des articles, magasins et périodes spécifiés.
+- **Réponses**:
+  - **201**: Rapport de prix créé avec succès.
+  - **400**: Requête mal formulée (données manquantes ou invalides).
+
+---
+
+# Documentation API - ExportController
+
+## Endpoints pour gérer les exportations
+
+### 1. Exporter les données au format CSV
+- **URL**: `/api/exports/csv`
+- **Méthode**: `GET`
+- **Résumé**: Exporte les rapports de prix au format CSV.
+- **Description**: Permet d'exporter les rapports de prix dans un fichier CSV pour une analyse hors ligne.
+- **Réponses**:
+  - **200**: Exportation CSV réussie.
+  - **500**: Erreur interne lors de l'exportation CSV.
+
+---
+
+### 2. Exporter les données au format PDF
+- **URL**: `/api/exports/pdf`
+- **Méthode**: `GET`
+- **Résumé**: Exporte les rapports de prix au format PDF.
+- **Description**: Permet d'exporter les rapports de prix dans un fichier PDF pour une analyse lisible.
+- **Réponses**:
+  - **200**: Exportation PDF réussie.
+  - **500**: Erreur interne lors de l'exportation PDF.
+
+---

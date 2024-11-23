@@ -1,10 +1,16 @@
 package be.ipam.pricecompare.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "ArticleEntity")
 public class ArticleEntity {
 
@@ -26,44 +32,6 @@ public class ArticleEntity {
     @Column(name = "LastUpdated", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime lastUpdated;
 
-    // Getters et Setters
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getArticleName() {
-        return articleName;
-    }
-
-    public void setArticleName(String articleName) {
-        this.articleName = articleName;
-    }
-
-    public UnitEntity getUnit() {
-        return unit;
-    }
-
-    public void setUnit(UnitEntity unit) {
-        this.unit = unit;
-    }
-
-    public BigDecimal getArticleDefaultPrice() {
-        return articleDefaultPrice;
-    }
-
-    public void setArticleDefaultPrice(BigDecimal articleDefaultPrice) {
-        this.articleDefaultPrice = articleDefaultPrice;
-    }
-
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotificationEntity> notifications;
 }

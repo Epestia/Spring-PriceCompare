@@ -13,18 +13,17 @@ import java.util.stream.Collectors;
 @Service
 public class PriceService {
 
-    private final PriceRepository priceRepository;  // Correction ici
+    private final PriceRepository priceRepository;
     private final PriceEntityMapper priceEntityMapper;
 
-    // Constructeur avec injection des dépendances
     public PriceService(PriceRepository priceRepository, PriceEntityMapper priceEntityMapper) {
-        this.priceRepository = priceRepository;  // Utilisation du bon nom ici
+        this.priceRepository = priceRepository;
         this.priceEntityMapper = priceEntityMapper;
     }
 
     public PriceEntityDto createPrice(PriceEntityDto priceEntityDto) {
         PriceEntity priceEntity = priceEntityMapper.toEntity(priceEntityDto);
-        PriceEntity savedPrice = priceRepository.save(priceEntity);  // Correction ici
+        PriceEntity savedPrice = priceRepository.save(priceEntity);
         return priceEntityMapper.toDto(savedPrice);
     }
 
@@ -36,22 +35,22 @@ public class PriceService {
     }
 
     public Optional<PriceEntityDto> getPriceById(Long id) {
-        return priceRepository.findById(id)  // Correction ici
+        return priceRepository.findById(id)
                 .map(priceEntityMapper::toDto);
     }
 
     public Optional<PriceEntityDto> updatePrice(Long id, PriceEntityDto priceEntityDto) {
-        return priceRepository.findById(id)  // Correction ici
+        return priceRepository.findById(id)
                 .map(existingPrice -> {
                     PriceEntity updatedEntity = priceEntityMapper.toEntity(priceEntityDto);
                     updatedEntity.setPriceID(existingPrice.getPriceID());  // Maintenir l'ID
-                    return priceEntityMapper.toDto(priceRepository.save(updatedEntity));  // Correction ici
+                    return priceEntityMapper.toDto(priceRepository.save(updatedEntity));
                 });
     }
 
     public boolean deletePrice(Long id) {
-        if (priceRepository.existsById(id)) {  // Correction ici
-            priceRepository.deleteById(id);  // Correction ici
+        if (priceRepository.existsById(id)) {
+            priceRepository.deleteById(id);
             return true;
         }
         return false;

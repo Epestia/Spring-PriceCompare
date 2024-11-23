@@ -20,20 +20,17 @@ public class StoreService {
     @Autowired
     private StoreEntityMapper storeEntityMapper;
 
-    // Ajouter un magasin
     public StoreEntityDto addStore(StoreEntityDto storeEntityDto) {
         StoreEntity storeEntity = storeEntityMapper.toEntity(storeEntityDto);
         storeEntity = storeRepository.save(storeEntity);
         return storeEntityMapper.toDto(storeEntity);
     }
 
-    // Obtenir un magasin par son ID
     public Optional<StoreEntityDto> getStoreById(Long storeId) {
         Optional<StoreEntity> storeEntity = storeRepository.findById(storeId);
         return storeEntity.map(storeEntityMapper::toDto);
     }
 
-    // Obtenir tous les magasins
     public List<StoreEntityDto> getAllStores() {
         List<StoreEntity> storeEntities = storeRepository.findAll();
         return storeEntities.stream()
@@ -41,7 +38,6 @@ public class StoreService {
                 .collect(Collectors.toList());
     }
 
-    // Mettre à jour un magasin
     public Optional<StoreEntityDto> updateStore(Long storeId, StoreEntityDto storeEntityDto) {
         Optional<StoreEntity> storeEntityOptional = storeRepository.findById(storeId);
 
@@ -56,7 +52,6 @@ public class StoreService {
         return Optional.empty();
     }
 
-    // Supprimer un magasin
     public boolean deleteStore(Long storeId) {
         if (storeRepository.existsById(storeId)) {
             storeRepository.deleteById(storeId);

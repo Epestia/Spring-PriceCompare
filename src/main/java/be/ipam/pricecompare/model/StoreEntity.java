@@ -13,18 +13,21 @@ public class StoreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "StoreID")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "StoreID")
     private Long storeId;
 
-    @Column(name = "StoreName")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "StoreName")
     private String storeName;
 
-    @Column(name = "StoreCity")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "StoreCity")
     private String storeCity;
 
-    @Column(name = "StoreAddress")  // Assurez-vous que le nom de la colonne est correct dans la base de données
+    @Column(name = "StoreAddress")
     private String storeAddress;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PriceEntity> prices;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotificationEntity> notifications;
 }

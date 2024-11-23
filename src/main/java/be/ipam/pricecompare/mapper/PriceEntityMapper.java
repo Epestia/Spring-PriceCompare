@@ -12,7 +12,6 @@ public interface PriceEntityMapper {
 
     PriceEntityDto toDto(PriceEntity priceEntity);
 
-    // Ajouter la conversion d'une liste d'entités en liste de DTOs
     List<PriceEntityDto> toDtoList(List<PriceEntity> priceEntities);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

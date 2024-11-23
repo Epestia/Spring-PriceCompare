@@ -17,3 +17,5 @@ public class ArticleEntityDto implements Serializable {
     Double articleDefaultPrice;
     LocalDateTime lastUpdated;
 }
+
+//historique
