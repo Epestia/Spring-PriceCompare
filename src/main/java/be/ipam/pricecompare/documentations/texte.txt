@@ -1,0 +1,26 @@
+//Price
+{
+  "priceID": 0,
+  "article": {
+    "articleId":5 ,
+    "articleName": "Livres",
+    "unit": {
+      "unitId": 1,
+      "unitName": "Kg"
+    },
+    "articleDefaultPrice": 3.96,
+    "lastUpdated": "2024-11-22T13:45:59.657Z"
+  },
+  "store": {
+    "storeId": 2,
+    "storeName": "string",
+    "storeCity": "string",
+    "storeAddress": "string"
+  },
+  "startDate": "2024-11-22T13:45:59.657Z",
+  "endDate": "2024-11-22T13:45:59.657Z",
+  "price": 0,
+  "previousPrice": 0,
+  "isPromotion": true,
+  "isEstimatedPrice": true
+}
