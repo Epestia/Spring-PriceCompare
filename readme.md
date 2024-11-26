@@ -1,6 +1,85 @@
+
+# Documentation API - AuthenticationController
+
+## Description
+
+Le **AuthenticationController** gère l'authentification des utilisateurs en générant des tokens JWT basés sur les identifiants fournis. Il propose également une fonctionnalité pour rafraîchir un token existant.
+
+---
+
+## 1 : Endpoints pour l'authentification et la gestion des tokens
+
+### 1. Générer un token JWT
+
+```http
+POST /api/authenticate
+```
+
+**Résumé**: Génère un token JWT après vérification des identifiants.  
+**Corps de la requête**:
+```json
+{
+  "username": "string",
+  "password": "string"
+}
+```
+**Réponses**:
+- **200**: Token généré avec succès.  
+  Exemple de réponse :
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+  ```
+
+- **401**: Identifiants invalides.  
+  Exemple de réponse :
+  ```json
+  {
+    "error": "INVALID_CREDENTIALS"
+  }
+  ```
+
+---
+
+### 2. Rafraîchir un token JWT
+
+```http
+GET /api/refresh
+```
+
+**Résumé**: Rafraîchit un token JWT valide.  
+**En-tête de la requête**:
+- **Authorization**: `Bearer <token>`
+
+**Réponses**:
+- **200**: Token rafraîchi avec succès.  
+  Exemple de réponse :
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+  ```
+
+- **400**: Le token ne peut pas être rafraîchi.  
+  Exemple de réponse :
+  ```json
+  {
+    "error": "TOKEN_CANNOT_BE_REFRESHED"
+  }
+  ```
+
+- **401**: Token invalide ou expiré.  
+  Exemple de réponse :
+  ```json
+  {
+    "error": "INVALID_TOKEN"
+  }
+  ```
+
 # Documentation API - UserController
 
-## Endpoints pour gérer les utilisateurs
+## 2 : Endpoints pour gérer les utilisateurs
 
 ### 1. Créer un nouvel utilisateur
 - **URL**: `/api/utilisateurs`
@@ -88,7 +167,7 @@ INSERT INTO roles (role_name) VALUES
 ```
 # Documentation API - ArticleController
 
-## Endpoints pour gérer les articles
+## 3 : Endpoints pour gérer les articles
 
 ### 1. Récupérer tous les articles
 - **URL**: `/api/articles`
@@ -193,7 +272,7 @@ INSERT INTO roles (role_name) VALUES
 
 # Documentation API - PriceController
 
-## Endpoints pour gérer les prix
+## 4 : Endpoints pour gérer les prix
 
 ### 1. Créer un nouveau prix
 - **URL**: `/api/prices`
@@ -283,7 +362,7 @@ INSERT INTO roles (role_name) VALUES
 ```
 # Documentation API - StoreController
 
-## Endpoints pour gérer les magasins
+## 5 : Endpoints pour gérer les magasins
 
 ### 1. Récupérer tous les magasins
 - **URL**: `/api/stores`
@@ -360,7 +439,7 @@ L'API **PriceReportController** permet de gérer les rapports de prix signalés 
 
 ---
 
-## Endpoints pour gérer les rapports de prix
+## 6 : Endpoints pour gérer les rapports de prix
 
 ### 1. Récupérer tous les rapports de prix
 
@@ -472,7 +551,7 @@ L'API **ExportController** gère les opérations relatives aux exportations de d
 
 ---
 
-## Endpoints pour gérer les exportations
+## 7 : Endpoints pour gérer les exportations
 
 ### 1. Créer une nouvelle exportation
 
@@ -578,7 +657,7 @@ Le contrôleur **NotificationController** permet de gérer les notifications dan
 
 ---
 
-## **Endpoints**
+##  8 : Endpoints pour gérer les Notifications
 
 ### **1. Créer une nouvelle notification**
 - **URL**: `/api/notifications`
